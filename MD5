@@ -1,0 +1,11 @@
+02c2561e9168e688be7193c943f34815 *DESCRIPTION
+08c16b531fd00a77276c5c4b0ef96a50 *NAMESPACE
+93e06ccc3af5dd950de48b5adc2833f0 *R/mmm2.R
+9869278d79f83dbdd0f2e86de2e36ca1 *data/mlcd.rda
+3c254278637d6b0ddf50fa3c93ffa0b9 *data/mlgd.rda
+d5cae33447a4151f9efc64c16e3c3b5c *data/mscm.rda
+b7686771164d4dc3d5fc0de96612414b *man/mlcd.Rd
+105419344bf28f2e684bbc20c87daf60 *man/mlgd.Rd
+16721d70a6181ed562d8c361cf26a9a5 *man/mmm2-package.Rd
+2e4a57fb1938b68861cf04dc1d5b8f1d *man/mmm2.Rd
+0bc0c526c84e38d97768bc34db908485 *man/mscm.Rd
