@@ -36,7 +36,7 @@ http://faculty.washington.edu/heagerty/Books/AnalysisLongitudinal/datasets.html
 \references{
 Alexander, C. S., Markowitz, R. (1986). Maternal employment and use of pediatric clinic services. \emph{Medical Care}, \bold{24(2)}, 134-147.
 
-Asar, O., Ilk, O. (2012). mmm: An R package for Multivariate Marginal Models. Submitted.
+Asar, O. (2012). \emph{On multivariate longitudinal binary data models and their applications in forecasting}. MS Thesis, Middle East Technical University.
 
 Diggle, P. J., Heagerty, P., Liang, K. Y., Zeger, S. L. (2002). \emph{Analysis of Longitudinal Data}. New York: Oxford University Press.
 

@@ -1,84 +1,63 @@
 mmm2 <-
-function(data,nresp,rtype=TRUE,interaction=NULL,coefnames=NULL,family="gaussian",tol=0.001,maxiter=25,corstr="independence",Mv=1,silent=TRUE){
-
-data<-data.frame(data)
-
-if (rtype==TRUE){
-if (length(coefnames)!=0){
-lcoef<-length(coefnames)
-colcov<-ncol(data)-(nresp+1)+(nresp-1)+(nresp-1)*length(interaction)
-if (lcoef!=(colcov+1)) stop("Length of coefficient names are not multiple of number of coefficients")
+function(formula, id, data=NULL, rtype = TRUE, interaction = NULL, R = NULL, 
+b = NULL, tol = 0.001, maxiter = 25,family = "gaussian", corstr = "independence", 
+Mv = 1, silent = TRUE, scale.fix = FALSE, scale.value = 1)
+{
+mf<-model.frame(formula=formula,data=data)
+x <- as.matrix(model.matrix(attr(mf, "terms"), data=mf)[,-1])
+if (ncol(x)==1) colnames(x)<-colnames(model.matrix(attr(mf, "terms"), data=mf))[2:(ncol(x)+1)]
+if (substr(colnames(x)[1],start=nchar(colnames(x)[1]),stop=nchar(colnames(x)[1]))!="]"){
+colnames(x)<-gsub("^.*\\$", "", unlist(strsplit(colnames(x), "[,)[:blank:]]")))}
+y<-model.response(mf); nresp<-ncol(y)
+nrowdata<-nrow(y)
+mresp<-matrix(as.numeric(t(y)))
+rep.nresp<-rep(nresp,nrow(x))
+covmat<-x[rep(1:nrow(x), rep.nresp), ] 
+id<-as.matrix(id,ncol=1)
+id<-id[rep(1:nrow(id), rep.nresp), ] 
+if (rtype == TRUE) {
+r <- matrix(rep(0, nresp * (nresp - 1)), nrow = nresp)
+for (i in 1:(nresp - 1)) {
+r[(nrow(r) - (i - 1)), i] <- 1
 }
+resptype <- NULL
+for (i in 1:(nrow(covmat)/nrow(r))) {
+resptype <- rbind(resptype, r)
+}
+if (ncol(resptype)==1){
+colnames(resptype)<-c("rtype")
 }else{
-if (length(coefnames)!=0){
-lcoef<-length(coefnames)
-colcov<-ncol(data)-(nresp+1)
-if (lcoef!=(colcov+1)) stop("Length of coefficient names are not multiple of number of coefficients")
+colnames(resptype)<-paste("rtype",seq(1:(nresp-1)),sep="")
+}
+interact <- NULL
+if (length(interaction) != 0) {
+for (i in 1:length(interaction)) {
+interact <- cbind(interact, resptype * covmat[, interaction[i]])
+}
+covmat <- cbind(covmat, resptype, interact)
+}
+else {
+covmat <- cbind(covmat, resptype)
 }
 }
-
-mresp<-NULL
-for (i in 1:dim(data)[1]){
-mresp<-rbind(mresp,t(data[i,2:(2+nresp-1)]))
+covmat <- as.data.frame(covmat)
+if (length(interaction!=0)){
+colnames(covmat)[(ncol(x)+nresp):ncol(covmat)]<-
+paste(colnames(resptype),rep(colnames(x)[interaction],
+each=length(colnames(resptype))),sep="*") 
 }
-
-covmat<-NULL
-for (i in 1:dim(data)[1]){
-cov<-NULL
-for (j in 1:nresp){
-cov<-rbind(cov,data[i,(1+nresp+1):dim(data)[2]])
+covn1<-colnames(covmat)[1]
+if (substr(colnames(x)[1],start=nchar(colnames(x)[1]),stop=nchar(colnames(x)[1]))=="]"){
+vn1<-paste("covariate",seq(ncol(x)),sep="")
+vn2<-paste(colnames(resptype),rep(vn1[interaction],each=length(colnames(resptype))),sep="*")
+colnames(covmat)<-c(vn1,colnames(resptype),vn2)
 }
-covmat<-rbind(covmat,cov)
-}
-
-id<-NULL
-for (i in 1:dim(data)[1]){
-id2<-NULL
-for (j in 1:nresp){
-id2<-rbind(id2,data[i,1])
-}
-id<-rbind(id,id2)
-}
-
-if (rtype==TRUE){
-r<-matrix(rep(0,nresp*(nresp-1)),nrow=nresp)
-for (i in 1:(nresp-1)){
-r[(nrow(r)-(i-1)),i]<-1
-}
-
-resptype<-NULL
-for (i in 1:(nrow(covmat)/nrow(r))){
-resptype<-rbind(resptype,r)
-}
-
-interact<-NULL
-if (length(interaction)!=0){
-for (i in 1:length(interaction)){
-interact<-cbind(interact,resptype*covmat[,interaction[i]])
-}
-covmat<-cbind(covmat,resptype,interact)
-}else{
-covmat<-cbind(covmat,resptype)
-}
-
-}
-covmat<-as.matrix(covmat)
-covmat<-cbind(rep(1,nrow(covmat)),covmat)
-
-if (length(coefnames)!=0){
-colnames(covmat)<-coefnames
-}#if
-
+formula2<-as.formula(paste("mresp ~ ", paste(colnames(covmat), collapse= "+")))
 library(gee)
-fitted.<-covmat
-gee1<-gee(mresp~-1+fitted.,id=id,family=family,tol=tol,maxiter=maxiter,corstr=corstr,Mv=Mv,silent=silent)
-#summary1<-summary(gee1)
-if (length(coefnames)!=0){
-#row.names(summary1$coefficients)<-coefnames
-#row.names(gee1$coefficients)<-coefnames
+fit <- gee(formula2, id = id, data=covmat, R=R, b=b, tol=tol, maxiter=maxiter, 
+family = family, corstr = corstr, Mv = Mv, silent = silent, scale.fix=scale.fix, 
+scale.value=scale.value)
+fit$title<-"Multivariate Marginal Models with Shared Regression Parameters"
+fit$version<-"Version 1.1 (11/2012)"
+fit
 }
-#list1<-summary1
-#list1
-gee1
-}
-

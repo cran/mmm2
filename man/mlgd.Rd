@@ -26,7 +26,7 @@ The covariates, X and time are the standardized values indeed. The related inter
 %%  ~~ reference to a publication or URL from which the data were obtained ~~
 %}
 \references{
-Asar, O., Ilk, O. (2012). mmm: An R package for Multivariate Marginal Models. Submitted.
+Asar, O. (2012). \emph{On multivariate longitudinal binary data models and their applications in forecasting}. MS Thesis, Middle East Technical University.
 
 Genz, A., Bretz, F., Miwa, T., Mi, X., Leisch, F., Scheipl, F., Hothorn, T. (2011). mvtnorm: Multivariate Normal and t Distributions. R package version 0.9-96. 
 URL http://CRAN.R-project.org/package=mvtnorm.

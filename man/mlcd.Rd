@@ -26,7 +26,7 @@ The covariates, X and time are the standardized values indeed. The related inter
 %
 %}
 \references{
-Asar, O., Ilk, O. (2012). mmm: An R package for Multivariate Marginal Models. Submitted.
+Asar, O. (2012). \emph{On multivariate longitudinal binary data models and their applications in forecasting}. MS Thesis, Middle East Technical University.
 
 Erhardt, V. (2009). corcounts: Generate Correlated Count Random Variable. R package version 1.4. 
 URL http://CRAN.R-project.org/package=corcounts.
