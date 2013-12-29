@@ -21,12 +21,14 @@ A data frame with 2000 observations on the following 6 variables. MLCD is a simu
 }
 \details{
 The covariates, X and time are the standardized values indeed. The related interaction is calculated by using these standardized values. X is a time-independent covariate.
+For the details of data generation see the user manual of the R package mmm at http://cran.r-project.org/web/packages/mmm/index.html.
 }
 %\source{
 %
 %}
 \references{
-Asar, O. (2012). \emph{On multivariate longitudinal binary data models and their applications in forecasting}. MS Thesis, Middle East Technical University.
+Asar, O. (2012). \emph{On multivariate longitudinal binary data models and their applications in forecasting}. MS Thesis, Middle East Technical University. Available
+at http://www.lancaster.ac.uk/pg/asar/thesis-Ozgur-Asar.
 
 Erhardt, V. (2009). corcounts: Generate Correlated Count Random Variable. R package version 1.4. 
 URL http://CRAN.R-project.org/package=corcounts.

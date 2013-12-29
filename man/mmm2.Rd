@@ -18,7 +18,7 @@ Mv = 1, silent = TRUE, scale.fix = FALSE, scale.value = 1)
 a formula expression, see the examples given below.
 }
   \item{id}{
-a vector for identification of the clusters.
+a vector for identification of the clusters or a single sided formula, see examples.
 }
   \item{data}{
 an optional data frame.
@@ -63,13 +63,16 @@ a logical variable which decides the print of the iterations.
 }
 }
 \details{
-The \code{mmm2} function utilizes the \code{\link{gee}} package within. Therefore, installation and loading of that package is mandatory. \code{mmm2} loads it automatically. 
+The \code{mmm2} function utilizes the \code{\link{gee}} package within.
 }
 \value{
 Returns an onject of the results. See the examples given below.
 }
 \references{
-Asar, O. (2012). \emph{On multivariate longitudinal binary data models and their applications in forecasting}. MS Thesis, Middle East Technical University.
+Asar, O. (2012). \emph{On multivariate longitudinal binary data models and their applications in forecasting}. MS Thesis, Middle East Technical University. Available
+at http://www.lancaster.ac.uk/pg/asar/thesis_Ozgur%20Asar.
+
+Asar, O., Ilk, O. (2013). mmm: an R package for analyzing multivariate longitudinal data with multivariate marginal models. \emph{Computer Methods and Programs in Biomedicine}, \bold{112} 649--654.
 
 Ilk, O., Daniels, M. (2007). Marginalized transition random effects models for multivariate longitudinal binary data. \emph{Canadian Journal of Statistics}, \bold{35}, 105-123.
 
@@ -77,13 +80,13 @@ Liang, K. L., Zeger, S. L. (1986). Longitudinal data analysis using generalized 
 
 Shelton, B. J., Gilbert, G. H., Liu, B., Fisher, M. (2004). A SAS macro for the analysis of multivariate longitudinal binary outcomes. \emph{Computer Methods and Programs in Biomedicine}, \bold{76}, 163-175. 
 
-Zeger, S. L., Liang, K. L (1986). Longitudinal data analysis for discrete and continous outcomes. \emph{Biometrics}, \bold{42}, 121-130.
+Zeger, S. L., Liang, K. L. (1986). Longitudinal data analysis for discrete and continous outcomes. \emph{Biometrics}, \bold{42}, 121-130.
 }
 \author{
 Ozgur Asar, Ozlem Ilk
 }
 \note{
-This is the version 1.1 of this user documentation file.
+This is the version 1.2 of this user documentation file.
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
@@ -93,10 +96,10 @@ This is the version 1.1 of this user documentation file.
 }
 \examples{
 ## binary data application
-data(mscm)
-fit1<-mmm2(formula=cbind(mscm$stress,mscm$illness)~mscm$married+mscm$education+mscm$employed+
-mscm$chlth+mscm$mhlth+mscm$race+mscm$csex+mscm$housize+mscm$bstress+mscm$billness+
-mscm$week,id=mscm$id,rtype=TRUE,interaction=1:11,family=binomial,corstr="exchangeable")
+data(Kenya_morbidity)
+fit1 <- mmm2(cbind(poor_appetite, headache) ~ visit_num + age_at_onset + boy + 
+             as.factor(treatment), id = ~ ID, data = Kenya_morbidity, interaction = 1 : 6, 
+             family = binomial(link = logit), corstr = "unstructured")
 summary(fit1)$coef
 
 ## count data application

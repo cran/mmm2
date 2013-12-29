@@ -21,12 +21,14 @@ A data frame with 2000 observations on the following 6 variables. MLGD is a simu
 }
 \details{
 The covariates, X and time are the standardized values indeed. The related interaction is calculated by using these standardized values. X is a time-independent covariate.
+For the details of data generation see the user manual of the R package mmm at http://cran.r-project.org/web/packages/mmm/index.html.
 }
 %\source{
 %%  ~~ reference to a publication or URL from which the data were obtained ~~
 %}
 \references{
-Asar, O. (2012). \emph{On multivariate longitudinal binary data models and their applications in forecasting}. MS Thesis, Middle East Technical University.
+Asar, O. (2012). \emph{On multivariate longitudinal binary data models and their applications in forecasting}. MS Thesis, Middle East Technical University. Available
+at http://www.lancaster.ac.uk/pg/asar/thesis-Ozgur-Asar.
 
 Genz, A., Bretz, F., Miwa, T., Mi, X., Leisch, F., Scheipl, F., Hothorn, T. (2011). mvtnorm: Multivariate Normal and t Distributions. R package version 0.9-96. 
 URL http://CRAN.R-project.org/package=mvtnorm.
